@@ -1,0 +1,30 @@
+label {
+	display: block;
+	margin-top: 0.5em;
+}
+
+* {
+  font-family: robotic;
+}
+
+ul .listOfSkills li {
+  display: inline;
+}
+
+.selected {
+  background-color: pink;
+}
+
+ul {
+  list-style-type: none;
+}
+
+input, textarea, label {
+  width: 70%;
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+span {
+  width: 3em;
+}

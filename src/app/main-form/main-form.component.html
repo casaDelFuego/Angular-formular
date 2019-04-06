@@ -1,0 +1,80 @@
+<h2>
+  Fill this from!!
+</h2>
+<div class="container">
+  <div class="form">
+    <label>Name</label>
+    <input type="text" [formControl]="firstNameControl" [class.invalid]="firstNameControl.invalid && (firstNameControl.touched || firstNameControl.dirty)"
+		[class.valid]="firstNameControl.valid && (firstNameControl.touched || firstNameControl.dirty)"/>
+
+    <div class="errorMessage" *ngIf="firstNameControl.errors?.required && (firstNameControl.touched || firstNameControl.dirty)">
+			Error
+		</div>
+  </div>
+
+  <div class="form">
+    <label>Last name</label>
+    <input type="text" placeholder="Last name" [formControl]="lastNameControl"
+		[class.invalid]="lastNameControl.invalid && (lastNameControl.touched || lastNameControl.dirty)"
+		[class.valid]="lastNameControl.valid && (lastNameControl.touched || lastNameControl.dirty)"/>
+
+    <div class="errorMessage" *ngIf="lastNameControl.errors?.required && (lastNameControl.touched || lastNameControl.dirty)">
+			Error
+		</div>
+  </div>
+
+  <div class="form">
+    <label>Address</label>
+    <input type="text" placeholder="Address"
+    [formControl]="addressControl" [class.invalid]="addressControl.invalid && (addressControl.touched || addressControl.dirty)"
+    [class.valid]="addressControl.valid && (addressControl.touched || addressControl.dirty)"/>
+
+    <div class="errorMessage" *ngIf="addressControl.errors?.required && (addressControl.touched || addressControl.dirty)">
+      Error
+    </div>
+  </div>
+
+
+  <div class="form">
+    <label>Description</label>
+    <textarea type="text" placeholder="Tell us breifly about yourself"
+    [formControl]="descriptionControl" [class.invalid]="descriptionControl.invalid && (descriptionControl.touched || descriptionControl.dirty)"
+		[class.valid]="descriptionControl.valid && (descriptionControl.touched || descriptionControl.dirty)"></textarea>
+
+    <div class="errorMessage" *ngIf="(descriptionControl.errors?.required || descriptionControl.errors?.minlength)&& (descriptionControl.touched || descriptionControl.dirty)">
+			Error
+		</div>
+  </div>
+
+
+  <div class="form">
+    <label>Education</label>
+    <input type="text" placeholder="Education"
+    [formControl]="educationControl" [class.invalid]="educationControl.invalid && (educationControl.touched || educationControl.dirty)"
+		[class.valid]="educationControl.valid && (educationControl.touched || educationControl.dirty)"/>
+
+    <div class="errorMessage" *ngIf="(educationControl.errors?.required || educationControl.errors?.minlength) && (educationControl.touched || educationControl.dirty)">
+			Error
+		</div>
+  </div>
+
+
+  <div class="form">
+    <label>Graduation year</label>
+    <input type="text" placeholder="Graduation year"
+    [formControl]="graduationYearControl" [class.invalid]="graduationYearControl.invalid && (graduationYearControl.touched || graduationYearControl.dirty)"
+		[class.valid]="graduationYearControl.valid && (graduationYearControl.touched || graduationYearControl.dirty)"/>
+
+    <div class="errorMessage" *ngIf="graduationYearControl.errors?.required && (graduationYearControl.touched || graduationYearControl.dirty)">
+			Error
+		</div>
+  </div>
+  </div>
+
+  <ul class="listOfSkills">
+    <li><button class="skill btn" (click)="selectSkill(skill)" *ngFor="let skill of skills" [className]="skill.selected ? 'selected' : ''">
+      {{skill.name}}
+    </button></li>
+  </ul>
+  <br/>
+  <button class="btn">Add experience</button>
