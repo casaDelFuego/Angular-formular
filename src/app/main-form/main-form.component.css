@@ -1,10 +1,7 @@
-label {
-	display: block;
-	margin-top: 0.5em;
-}
-
-* {
-  font-family: robotic;
+.wrapper {
+  font-size: 20px;
+  display: block;
+  justify-content: center;
 }
 
 ul .listOfSkills li {
@@ -15,16 +12,10 @@ ul .listOfSkills li {
   background-color: pink;
 }
 
-ul {
-  list-style-type: none;
+input {
+  margin: 0.5em;
 }
 
-input, textarea, label {
-  width: 70%;
-  margin-left: 4em;
-  margin-right: 4em;
-}
-
-span {
-  width: 3em;
+.errorMessage {
+  color: red;
 }

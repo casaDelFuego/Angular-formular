@@ -1,80 +1,81 @@
-<h2>
-  Fill this from!!
-</h2>
-<div class="container">
-  <div class="form">
-    <label>Name</label>
-    <input type="text" [formControl]="firstNameControl" [class.invalid]="firstNameControl.invalid && (firstNameControl.touched || firstNameControl.dirty)"
-		[class.valid]="firstNameControl.valid && (firstNameControl.touched || firstNameControl.dirty)"/>
+<form [formGroup]="mainForm" class="wrapper">
+  <h1>Please fill the form below</h1>
+  <div formGroupName="theName">
+    <h2>Name:</h2>
+    <input type="text" formControlName="firstName" placeholder="Firstname"/>
+    <input type="text" formControlName="lastName" placeholder="Lastname"/>
 
-    <div class="errorMessage" *ngIf="firstNameControl.errors?.required && (firstNameControl.touched || firstNameControl.dirty)">
-			Error
-		</div>
+    <p class="errorMessage" *ngIf="!mainForm.controls.theName.valid && mainForm.controls.theName.touched">
+      First and last name have to be at least 2 symbols
+    </p>
   </div>
 
-  <div class="form">
-    <label>Last name</label>
-    <input type="text" placeholder="Last name" [formControl]="lastNameControl"
-		[class.invalid]="lastNameControl.invalid && (lastNameControl.touched || lastNameControl.dirty)"
-		[class.valid]="lastNameControl.valid && (lastNameControl.touched || lastNameControl.dirty)"/>
+  <div formGroupName="education">
+     <h2>Education</h2>
+    <div>
+      <input type="text" formControlName="school" placeholder="School"/>
+      <input type="text" formControlName="graduationYear" placeholder="Year of graduation"/>
 
-    <div class="errorMessage" *ngIf="lastNameControl.errors?.required && (lastNameControl.touched || lastNameControl.dirty)">
-			Error
-		</div>
-  </div>
+      <p class="errorMessage" *ngIf="!mainForm.controls.education.valid && mainForm.controls.education.touched">
+        Your school name has to be at least 3 characters and your graduation year has to be between 1980-2099.
+      </p>
 
-  <div class="form">
-    <label>Address</label>
-    <input type="text" placeholder="Address"
-    [formControl]="addressControl" [class.invalid]="addressControl.invalid && (addressControl.touched || addressControl.dirty)"
-    [class.valid]="addressControl.valid && (addressControl.touched || addressControl.dirty)"/>
-
-    <div class="errorMessage" *ngIf="addressControl.errors?.required && (addressControl.touched || addressControl.dirty)">
-      Error
     </div>
   </div>
 
+  <div formGroupName="address">
+    <h2>Adress:</h2>
 
-  <div class="form">
-    <label>Description</label>
-    <textarea type="text" placeholder="Tell us breifly about yourself"
-    [formControl]="descriptionControl" [class.invalid]="descriptionControl.invalid && (descriptionControl.touched || descriptionControl.dirty)"
-		[class.valid]="descriptionControl.valid && (descriptionControl.touched || descriptionControl.dirty)"></textarea>
+    <input type="text" formControlName="city" placeholder="City"/>
+    <br/>
+    <input type="text" formControlName="country" placeholder="Country"/>
+    <br/>
+    <span class="errorMessage" *ngIf="!mainForm.controls.address.valid && mainForm.controls.address.touched">
+      City and country are required
+    </span>
 
-    <div class="errorMessage" *ngIf="(descriptionControl.errors?.required || descriptionControl.errors?.minlength)&& (descriptionControl.touched || descriptionControl.dirty)">
-			Error
-		</div>
   </div>
 
 
-  <div class="form">
-    <label>Education</label>
-    <input type="text" placeholder="Education"
-    [formControl]="educationControl" [class.invalid]="educationControl.invalid && (educationControl.touched || educationControl.dirty)"
-		[class.valid]="educationControl.valid && (educationControl.touched || educationControl.dirty)"/>
 
-    <div class="errorMessage" *ngIf="(educationControl.errors?.required || educationControl.errors?.minlength) && (educationControl.touched || educationControl.dirty)">
-			Error
-		</div>
+  <div>
+    <h2>Tell us about yourself:</h2>
+    <textarea formControlName="description" rows="3"></textarea>
+
+    <span class="errorMessage" *ngIf="mainForm.controls.description && !mainForm.controls.description.valid && mainForm.controls.description.touched">
+      We need to know something about you in at least 20 characters
+    </span>
+
+
   </div>
 
-
-  <div class="form">
-    <label>Graduation year</label>
-    <input type="text" placeholder="Graduation year"
-    [formControl]="graduationYearControl" [class.invalid]="graduationYearControl.invalid && (graduationYearControl.touched || graduationYearControl.dirty)"
-		[class.valid]="graduationYearControl.valid && (graduationYearControl.touched || graduationYearControl.dirty)"/>
-
-    <div class="errorMessage" *ngIf="graduationYearControl.errors?.required && (graduationYearControl.touched || graduationYearControl.dirty)">
-			Error
-		</div>
+  <div formArrayName="experience">
+    <h2>Where did you work before:</h2>
+    <div class="list" *ngFor="let item of mainForm.get('experience').controls; let i = index">
+      <div [formGroupName]="i">
+        <input type="text" formControlName="company" placeholder="Company"/>
+        <input type="text" formControlName="position" placeholder="Position"/>
+        <br/>
+        <input type="text" formControlName="period" placeholder="Period" class="year"/>
+        <br/>
+        <button type="button" (click)="onRemoveExp(i)">Delete this experience</button>
+        <p class="errorMessage" *ngIf="!item.valid && item.touched">
+          Your former experience has to be at least 3 character and period is between 1980-2099.
+        </p>
+      </div>
+    </div>
+    <button type="button" (click)="onAddExp()">Add new experience</button>
   </div>
+
+  <div>
+    <p>Select which skills you have</p>
+    <ul class="listOfSkills">
+      <li><button class="skill btn" (click)="selectSkill(skill)" *ngFor="let skill of skills" [className]="skill.selected ? 'selected' : ''">
+        {{skill.name}}
+      </button></li>
+    </ul>
   </div>
 
-  <ul class="listOfSkills">
-    <li><button class="skill btn" (click)="selectSkill(skill)" *ngFor="let skill of skills" [className]="skill.selected ? 'selected' : ''">
-      {{skill.name}}
-    </button></li>
-  </ul>
-  <br/>
-  <button class="btn">Add experience</button>
+  <button type="submit" [disabled]="!mainForm.valid" (click)="onSubmit()">Send</button>
+
+</form>
